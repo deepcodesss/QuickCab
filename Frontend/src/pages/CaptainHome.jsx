@@ -1,11 +1,91 @@
-import React from 'react'
+import React, { useRef, useState } from "react";
+import carImage from "../assets/car.webp";
+import bikeImage from "../assets/moto.webp";
+import autoImage from "../assets/auto.webp";
+import { Link } from "react-router-dom";
+import quickCabLogo from "../assets/quickcab.svg";
+// import quickCabLogo from '../assets/quickcab_black.svg'
+import CaptainDetails from "../components/CaptainDetails";
+import RidePopUp from "../components/RidePopUp";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 
 const CaptainHome = () => {
-  return (
-    <div>
-      Captain
-    </div>
-  )
-}
 
-export default CaptainHome
+
+  const RidePopUpPanelRef = useRef(null);
+  const ConfirmRidePopUpPanelRef = useRef(null);
+  const [ RidePopUpPanel, setRidePopUpPanel ] = useState(true);
+  const [ ConfirmRidePopUpPanel, setConfirmRidePopUpPanel ] = useState(false);
+
+
+
+
+
+  useGSAP(function() {
+    if(RidePopUpPanel){
+      gsap.to(RidePopUpPanelRef.current, {
+      y : '0%'
+    })
+    }
+    else{
+      gsap.to(RidePopUpPanelRef.current, {
+      y : "100%"
+    })
+    }
+  }, [RidePopUpPanel]);
+
+
+    useGSAP(function() {
+    if(ConfirmRidePopUpPanel){
+      gsap.to(ConfirmRidePopUpPanelRef.current, {
+      y : '0%'
+    })
+    }
+    else{
+      gsap.to(ConfirmRidePopUpPanelRef.current, {
+      y : "100%"
+    })
+    }
+  }, [ConfirmRidePopUpPanel]);
+
+
+  return (
+    <div className="h-screen">
+      <div className="fixed p-6 top-0 flex items-center justify-between w-full">
+        <img
+          src={quickCabLogo}
+          alt="logo"
+          className="bg-black w-25 rounded-xl"
+        />
+        <Link
+          to="/captain/logout"
+          className=" h-10 w-10 bg-white rounded-2xl flex items-center justify-center"
+        >
+          <i className="ri-logout-box-r-line text-2xl font-semibold"></i>
+        </Link>
+      </div>
+      <div className="h-[67%]">
+        <img
+          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
+          alt=""
+          className="h-full w-full object-cover "
+        />
+      </div>
+      <div className="h-[33%] p-6">
+        <CaptainDetails />
+      </div>
+
+      <div ref={RidePopUpPanelRef} className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12">
+        <RidePopUp setRidePopUpPanel={setRidePopUpPanel} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  />
+      </div>
+      <div ref={ConfirmRidePopUpPanelRef} className="fixed h-screen w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12">
+        <ConfirmRidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setRidePopUpPanel={setRidePopUpPanel}  />
+      </div>
+
+    </div>
+  );
+};
+
+export default CaptainHome;

@@ -6,7 +6,7 @@ import UserSignup from "./pages/UserSignup";
 import CaptainLogin from "./pages/CaptainLogin";
 import CaptainSignup from "./pages/CaptainSignup";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import UserHome from "./pages/UserHome";
 import UserProtectWrapper from "./pages/UserProtectWrapper";
 import UserLogout from "./pages/UserLogout";
 import CaptainHome from "./pages/CaptainHome";
@@ -15,6 +15,8 @@ import CaptainLogout from "./pages/CaptainLogout";
 import About from "./pages/About";
 import CaptainKyc from "./pages/CaptainKyc";
 import NotFound from "./pages/NotFound";
+import Riding from "./pages/Riding";
+import CaptainRiding from "./components/CaptainRiding";
 
 const App = () => {
   return (
@@ -23,6 +25,16 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/user/login" element={<UserLogin />} />
+        <Route path="/user/riding" element={
+          <UserProtectWrapper>
+          <Riding />
+          </UserProtectWrapper>
+          } />
+        <Route path="/captain/riding" element={
+          <CaptainProtectWrapper>
+          <CaptainRiding />
+          </CaptainProtectWrapper>
+          } />
         <Route path="/user/signup" element={<UserSignup />} />
         <Route path="/captain/login" element={<CaptainLogin />} />
         <Route path="/captain/signup" element={<CaptainSignup />} />
@@ -31,10 +43,10 @@ const App = () => {
 
         <Route path="*" element={<NotFound />} />
         <Route
-          path="/home"
+          path="/user/home"
           element={
             <UserProtectWrapper>
-              <Home />
+              <UserHome />
             </UserProtectWrapper>
           }
         />

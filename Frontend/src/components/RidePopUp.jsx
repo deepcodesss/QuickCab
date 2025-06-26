@@ -1,0 +1,80 @@
+import React from "react";
+
+const RidePopUp = (props) => {
+  return (
+    <div>
+      <h5
+        onClick={() => {
+          props.setRidePopUpPanel(false);
+        }}
+        className="p-1 text-center absolute top-0 w-[93%]"
+      >
+        <i className="ri-arrow-down-wide-line text-3xl text-gray-300"></i>
+      </h5>
+      <h3 className="font-semibold text-2xl mb-6">New Ride Available!</h3>
+      <div className="flex justify-between items-center bg-yellow-400 p-3 rounded-lg mt-3">
+        <div className="flex items-center gap-3">
+          <img
+            className="h-12 w-12 rounded-full object-cover"
+            src="https://i.pinimg.com/736x/cb/33/d8/cb33d80fe655e221ae05f41c8edd0cdb.jpg"
+            alt="user"
+          />
+          <h2 className="text-xl font-medium">Karan pandit</h2>
+        </div>
+        <h5 className="text-lg font-semibold">2.2 KM</h5>
+      </div>
+      <div className="flex flex-col gap-5 w-full items-center mt-3">
+        <div className="flex flex-col gap-1 w-full px-3">
+          <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
+            <i className="ri-map-pin-4-line text-lg"></i>
+            <div>
+              <h3 className="text-lg font-medium">562/11-A</h3>
+              <p className="text-sm -mt-1 text-gray-600">
+                Gooba Gardens, Kanpur,Uttar Pradesh
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
+            <i className="ri-map-pin-range-line text-lg"></i>
+            <div>
+              <h3 className="text-lg font-medium">562/11-A</h3>
+              <p className="text-sm -mt-1 text-gray-600">
+                Gooba Gardens, Kanpur,Uttar Pradesh
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 border-gray-300 p-3">
+            <i className="ri-money-rupee-circle-line text-lg"></i>
+            <div>
+              <h3 className="text-lg font-medium">₹193.20</h3>
+              <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className=" w-full flex flex-row items-center gap-5">
+        <button
+          onClick={() => {
+            props.setRidePopUpPanel(false);
+          }}
+          className="w-1/2 bg-gray-300 text-gray-500 font-bold rounded-lg p-3"
+        >
+          Ignore
+        </button>
+        <button
+          onClick={() => {
+            props.setConfirmRidePopUpPanel(true);
+            props.setRidePopUpPanel(false);
+          }}
+          className="w-1/2 bg-green-500 text-white font-bold rounded-lg p-3"
+        >
+          Accept Ride
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default RidePopUp;

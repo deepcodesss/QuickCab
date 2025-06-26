@@ -1,18 +1,21 @@
 import React from "react";
 import notFound from "../assets/notfound.gif"; // or use the uploaded PNG if preferred
 import { Link } from "react-router-dom";
+// import Navbar from '../components/Navbar'
 
 const NotFound = () => {
   return (
+    <div>
+      {/* <Navbar /> */}
     <div className="flex flex-col items-center justify-center min-h-screen px-4 text-center bg-white">
       <h1 className="text-6xl font-bold text-gray-800 mb-4">404</h1>
       <img
         src={notFound}
         alt="Not Found"
-        className="w-72 sm:w-96 md:w-[400px] mb-6"
+        className="w-72 sm:w-96 md:w-[450px] mb-6"
       />
       <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-        Look like you're lost
+        Looks like you're lost
       </h2>
       <p className="text-gray-500 mb-6">
         The page you are looking for is not available!
@@ -23,6 +26,7 @@ const NotFound = () => {
       >
         Go to Home
       </Link>
+    </div>
     </div>
   );
 };
