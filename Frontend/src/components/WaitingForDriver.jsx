@@ -9,7 +9,7 @@ const WaitingForDriver = (props) => {
       <h5
         onClick={() => {
           props.setWaitingForDriver(false);
-          console.log("clicked")
+          console.log("clicked");
         }}
         className="p-1 text-center absolute top-0 w-[93%]"
       >
@@ -21,8 +21,8 @@ const WaitingForDriver = (props) => {
 
         <div className="flex flex-col text-right">
           <h2 className="text-lg font-medium ">Karan Pandit</h2>
-        <h4 className="text-xl font-semibold -mt-1 -mb-1">UP 78 DX 8743</h4>
-        <p className="text-sm text-gray-600">Ford EcoSport</p>
+          <h4 className="text-xl font-semibold -mt-1 -mb-1">UP 78 DX 8743</h4>
+          <p className="text-sm text-gray-600">Ford EcoSport</p>
         </div>
       </div>
 

@@ -1,6 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 const FinishRide = (props) => {
   return (
@@ -10,7 +9,7 @@ const FinishRide = (props) => {
           props.setFinishRidePanel(false);
         }}
         className="p-1 text-center absolute top-0 w-[93%]"
-      > 
+      >
         <i className="ri-arrow-down-wide-line text-3xl text-gray-300"></i>
       </h5>
       <h3 className="font-semibold text-2xl mb-6">Finish This Ride</h3>
@@ -58,7 +57,7 @@ const FinishRide = (props) => {
       </div>
       {/* <div className='mt-6 flex flex-col justify-center items-center gap-5'> */}
       <div className="w-full mt-5">
-            <Link
+        <Link
           to="/captain/home"
           className="w-full flex justify-center items-center bg-green-600 text-white font-semibold text-xl rounded-lg p-4"
         >
@@ -67,7 +66,7 @@ const FinishRide = (props) => {
         {/* <p className='text-red-600 mt-3 text-xs'>*Click only if you recieved the payment</p> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FinishRide
+export default FinishRide;

@@ -45,17 +45,18 @@ const ConfirmedRide = (props) => {
             <i className="ri-money-rupee-circle-line text-lg"></i>
             <div>
               <h3 className="text-lg font-medium">₹193.20</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                Cash cash
-              </p>
+              <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
             </div>
           </div>
         </div>
 
-        <button onClick={() => {
+        <button
+          onClick={() => {
             props.setVehicleFound(true);
             props.setConfirmRidePanel(false);
-        }} className="w-full bg-green-500 text-white font-bold rounded-lg py-2">
+          }}
+          className="w-full bg-green-500 text-white font-bold rounded-lg py-2"
+        >
           Confirm Ride
         </button>
       </div>

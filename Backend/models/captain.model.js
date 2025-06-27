@@ -36,15 +36,26 @@ const captainSchema = new mongoose.Schema({
     type: String,
     enum: ["active", "inactive" /*'banned'*/],
     default: "inactive",
-  },
+    },
+
+
   //kyc
-  aadhaarNumber: {
-    type: String,
-    unique: true,
-    sparse: true,
-    minlength: 12,
-    maxlength: 12,
-  },
+  // aadhaarNumber: {
+  //   type: String,
+  //   unique: true,
+  //   sparse: true,
+  //   minlength: 12,
+  //   maxlength: 12,
+  // },
+
+  drivingLicenseNumber: {
+  type: String,
+  unique: true,
+  sparse: true,
+  minlength: 10,
+  maxlength: 20,
+},
+
   panNumber: {
     type: String,
     unique: true,
@@ -67,7 +78,21 @@ const captainSchema = new mongoose.Schema({
       lng: Number,
     },
   },
-  //kyc end
+  //kyc end
+
+  // {/* vehicleType: {
+  //    type: String,
+  //    required: true,
+  //   enum: ['car', 'motorcycle', 'auto'],
+  //},
+  //location: {
+  //   lat:{
+  //      type: Number,
+  //    },
+  //   lng:{
+  //       type: Number,
+  //   }
+  //}*/}
 });
 
 captainSchema.methods.generateAuthToken = function () {

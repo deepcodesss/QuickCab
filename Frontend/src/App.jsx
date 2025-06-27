@@ -17,8 +17,6 @@ import CaptainKyc from "./pages/CaptainKyc";
 import NotFound from "./pages/NotFound";
 import Riding from "./pages/Riding";
 import CaptainRiding from "./components/CaptainRiding";
-import { useCallback } from "react";
-import { useContext } from "react";
 
 const App = () => {
   return (

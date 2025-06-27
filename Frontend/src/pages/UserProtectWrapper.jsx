@@ -13,7 +13,7 @@ const UserProtectWrapper = ({ children }) => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/login");
+      navigate("/user/login");
     }
 
     axios
@@ -31,7 +31,7 @@ const UserProtectWrapper = ({ children }) => {
       .catch((err) => {
         console.log(err);
         localStorage.removeItem("token");
-        navigate("/login");
+        navigate("/user/login");
       });
   }, [token]);
 

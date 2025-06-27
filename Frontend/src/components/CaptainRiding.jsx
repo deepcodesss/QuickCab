@@ -47,10 +47,11 @@ const CaptainRiding = () => {
         />
       </div>
       <div
-      onClick={() => {
-        setFinishRidePanel(true);
-      }}
-       className="bg-yellow-400 h-[20%] flex items-center justify-between p-6 relative">
+        onClick={() => {
+          setFinishRidePanel(true);
+        }}
+        className="bg-yellow-400 h-[20%] flex items-center justify-between p-6 relative"
+      >
         <h5
           onClick={() => {
             props.setRidePopUpPanel(false);
@@ -63,10 +64,12 @@ const CaptainRiding = () => {
         <button className="bg-green-600 text-white font-semibold rounded-lg py-3 px-10">
           Complete Ride
         </button>
-
       </div>
-        <div ref={finishRidePanelRef} className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12">
-        <FinishRide setFinishRidePanel={setFinishRidePanel}  />
+      <div
+        ref={finishRidePanelRef}
+        className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12"
+      >
+        <FinishRide setFinishRidePanel={setFinishRidePanel} />
       </div>
     </div>
   );

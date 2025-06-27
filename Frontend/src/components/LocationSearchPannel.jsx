@@ -2,7 +2,7 @@ import React from "react";
 import mapPinIcon from "../assets/map-pin-line.png";
 
 const LocationSearchPannel = (props) => {
-    console.log(props);
+  console.log(props);
 
   const locations = [
     "24B, Mishra's Building, Rajeev's Coding School, ChaubePur",
@@ -25,12 +25,11 @@ const LocationSearchPannel = (props) => {
       {locations.map(function (elem, idx) {
         return (
           <div
-          key={idx}
+            key={idx}
             onClick={() => {
               props.setVehiclePanel(true);
               props.setPanelOpen(false);
               console.log(props.vehiclePanel);
-
             }}
             className="flex gap-4 border-2 border-gray-200 p-2 rounded-xl active:border-black items-center my-4 justify-start"
           >

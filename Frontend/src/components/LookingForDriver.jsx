@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import VehiclePannel from "../components/VehiclePannel";
 import carImage from "../assets/car.webp";
 import bikeImage from "../assets/moto.webp";
@@ -6,10 +6,9 @@ import autoImage from "../assets/auto.webp";
 
 const vehicleImage = carImage;
 
-
 const LookingForDriver = (props) => {
   return (
-   <div>
+    <div>
       <h5
         onClick={() => {
           props.setVehicleFound(false);
@@ -47,15 +46,13 @@ const LookingForDriver = (props) => {
             <i className="ri-money-rupee-circle-line text-lg"></i>
             <div>
               <h3 className="text-lg font-medium">₹193.20</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                Cash cash
-              </p>
+              <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LookingForDriver
+export default LookingForDriver;
