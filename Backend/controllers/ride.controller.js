@@ -26,7 +26,7 @@ module.exports.createRide = async (req, res) => {
 
     const pickupCoordinates = await mapService.getLatLngFromAddress(pickup);
 
-    const captains = await mapService.getCaptainInTheRadius(
+    const captainInRadius = await mapService.getCaptainInTheRadius(
       pickupCoordinates.lat,
       pickupCoordinates.lon,
       3000 // 3km radius
@@ -34,20 +34,9 @@ module.exports.createRide = async (req, res) => {
 
     ride.otp = ""; 
 
-    // for (const captain of captains) {
-    //   if (captain.socketId) {
-    //     sendMessageToSocketId(captain.socketId, {
-    //       event: "new-ride",
-    //       data: {
-    //         rideId: ride._id,
-    //         pickup,
-    //         destination,
-    //       },
-    //     });
-    //   }
-    // }
+    // const rideWithUser = 
 
-    captains.map(captain => {
+    captainInRadius.map(async captain => {
       console.log("captain and ride are : ", captain, ride);
       sendMessageToSocketId(captain.socketId, {
         event : 'new-ride',

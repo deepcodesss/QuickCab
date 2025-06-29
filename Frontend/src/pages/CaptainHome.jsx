@@ -54,10 +54,12 @@ const CaptainHome = () => {
     const locationInterval = setInterval(updateLocation, 10000);
     updateLocation();
     
-      socket.on('new-ride', (data) => {
-        console.log(data);
-      })
-  });
+  }, []);
+  
+  socket.on('new-ride', (data) => {
+    console.log("data aa gya h doston............") ;
+    console.log(data);
+  })
 
   useGSAP(
     function () {

@@ -36,15 +36,15 @@ const captainSchema = new mongoose.Schema({
     type: String,
     enum: ["active", "inactive" /*'banned'*/],
     default: "inactive",
-    },
+  },
 
   drivingLicenseNumber: {
-  type: String,
-  unique: true,
-  sparse: true,
-  minlength: 10,
-  maxlength: 20,
-},
+    type: String,
+    unique: true,
+    sparse: true,
+    minlength: 10,
+    maxlength: 20,
+  },
 
   panNumber: {
     type: String,
@@ -54,45 +54,27 @@ const captainSchema = new mongoose.Schema({
     maxlength: 10,
   },
 
-  // vehicle: {
-  //   color: String,
-  //   plate: String,
-  //   capacity: Number,
-  //   vehicleType: {
-  //     type: String,
-  //     //required: true,
-  //     enum: ["car", "motorcycle", "auto"],
-  //   },
-  //   location: {
-  //     lat: Number,
-  //     lon: Number,
-  //   },
-  // },
-
-
   vehicle: {
-  color: String,
-  plate: String,
-  capacity: Number,
-  vehicleType: {
-    type: String,
-    enum: ["car", "motorcycle", "auto"],
+    color: String,
+    plate: String,
+    capacity: Number,
+    vehicleType: {
+      type: String,
+      //required: true,
+      enum: ["car", "motorcycle", "auto"],
+    },
   },
   location: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      default: "Point",
+    lat: {
+      type: Number,
     },
-    coordinates: {
-      type: [Number], // [longitude, latitude]
-      required: true,
+    lon: {
+      type: Number,
     },
   },
-},
 });
 
-captainSchema.index({ 'vehicle.location': '2dsphere' });
+captainSchema.index({ "vehicle.location": "2dsphere" });
 
 captainSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
