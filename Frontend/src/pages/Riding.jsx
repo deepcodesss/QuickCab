@@ -2,14 +2,30 @@ import React from "react";
 import carImage from "../assets/car.webp";
 import bikeImage from "../assets/moto.webp";
 import autoImage from "../assets/auto.webp";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import {SocketContext} from "../context/SocketContext";
 
 
 // user riding 
 const Riding = () => {
+
+
+  const navigate = useNavigate();
+
+  const{socket} = useContext(SocketContext);
+  
+  const location = useLocation();
+  const { ride } = location.state || {}
+
+
+  socket.on('ride-ended', () => {
+    navigate('/user/home');
+  })
+
   return (
     <div className="h-screen">
-        <Link to='/user/home' className="fixed h-10 w-10 bg-white rounded-2xl flex items-center justify-center"><i class="ri-home-5-line text-2xl font-extrabold right-2 top-2 block"></i></Link>
+        <Link to='/user/home' className="fixed h-10 w-10 bg-white rounded-2xl flex items-center justify-center"><i className="ri-home-5-line text-2xl font-extrabold right-2 top-2 block"></i></Link>
       <div className="h-1/2">
         <img src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" className="h-full w-full object-cover " />
       </div>
@@ -18,8 +34,8 @@ const Riding = () => {
           <img src={bikeImage} alt="" className="w-40" />
 
           <div className="flex flex-col text-right">
-            <h2 className="text-lg font-medium ">Karan Pandit</h2>
-            <h4 className="text-xl font-semibold -mt-1 -mb-1">UP 78 DX 8743</h4>
+            <h2 className="text-lg font-medium capitalize">{ride?.captain.fullname.firstname + " " + ride?.captain.fullname.lastname}</h2>
+            <h4 className="text-xl font-semibold -mt-1 -mb-1">{ride?.captain.vehicle.plate}</h4>
             <p className="text-sm text-gray-600">Ford EcoSport</p>
           </div>
         </div>
@@ -32,7 +48,7 @@ const Riding = () => {
               <div>
                 <h3 className="text-lg font-medium">562/11-A</h3>
                 <p className="text-sm -mt-1 text-gray-600">
-                  Gooba Gardens, Kanpur,Uttar Pradesh
+                  {ride?.destination}
                 </p>
               </div>
             </div>
@@ -40,7 +56,7 @@ const Riding = () => {
             <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
               <i className="ri-money-rupee-circle-line text-lg"></i>
               <div>
-                <h3 className="text-lg font-medium">₹193.20</h3>
+                <h3 className="text-lg font-medium">₹{ride.fare}</h3>
                 <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
               </div>
             </div>

@@ -20,9 +20,10 @@ const WaitingForDriver = (props) => {
         <img src={bikeImage} alt="" className="w-40" />
 
         <div className="flex flex-col text-right">
-          <h2 className="text-lg font-medium ">Karan Pandit</h2>
-          <h4 className="text-xl font-semibold -mt-1 -mb-1">UP 78 DX 8743</h4>
+          <h2 className="text-lg font-medium ">{props.ride?.captain.fullname.firstname + " " + props.ride?.captain.fullname.lastname}</h2>
+          <h4 className="text-xl font-semibold -mt-1 -mb-1">{props.ride?.captain.vehicle.plate}</h4>
           <p className="text-sm text-gray-600">Ford EcoSport</p>
+          <h1 className="text-sm text-gray-600">{props.ride?.otp}</h1>
         </div>
       </div>
 
@@ -32,8 +33,8 @@ const WaitingForDriver = (props) => {
             <i className="ri-map-pin-4-line text-lg"></i>
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                Gooba Gardens, Kanpur,Uttar Pradesh
+              <p className="text-sm -mt-1 text-gray-600 capitalize">
+                {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -43,7 +44,7 @@ const WaitingForDriver = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Gooba Gardens, Kanpur,Uttar Pradesh
+                {props.ride?.destination}
               </p>
             </div>
           </div>
@@ -51,7 +52,7 @@ const WaitingForDriver = (props) => {
           <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
             <i className="ri-money-rupee-circle-line text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">₹193.20</h3>
+              <h3 className="text-lg font-medium">₹{props.ride?.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
             </div>
           </div>

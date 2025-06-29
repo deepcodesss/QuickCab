@@ -19,7 +19,7 @@ const RidePopUp = (props) => {
             src="https://i.pinimg.com/736x/cb/33/d8/cb33d80fe655e221ae05f41c8edd0cdb.jpg"
             alt="user"
           />
-          <h2 className="text-xl font-medium">Karan pandit</h2>
+          <h2 className="text-xl font-medium">{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname}</h2>
         </div>
         <h5 className="text-lg font-semibold">2.2 KM</h5>
       </div>
@@ -30,7 +30,7 @@ const RidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Gooba Gardens, Kanpur,Uttar Pradesh
+                {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -40,7 +40,7 @@ const RidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Gooba Gardens, Kanpur,Uttar Pradesh
+                {props.ride?.destination}
               </p>
             </div>
           </div>
@@ -48,7 +48,7 @@ const RidePopUp = (props) => {
           <div className="flex items-start gap-3 border-gray-300 p-3">
             <i className="ri-money-rupee-circle-line text-lg"></i>
             <div>
-              <h3 className="text-lg font-medium">₹193.20</h3>
+              <h3 className="text-lg font-medium">₹{props.ride?.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
             </div>
           </div>
@@ -66,7 +66,8 @@ const RidePopUp = (props) => {
         <button
           onClick={() => {
             props.setConfirmRidePopUpPanel(true);
-            props.setRidePopUpPanel(false);
+            // props.setRidePopUpPanel(false);
+            props.confirmRide()
           }}
           className="w-1/2 bg-green-500 text-white font-bold rounded-lg p-3"
         >

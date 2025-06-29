@@ -1,6 +1,7 @@
+
 import React, { useRef, useState } from "react";
 import quickCabLogo from "../assets/quickcab.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import FinishRide from "./FinishRide";
@@ -8,6 +9,8 @@ import FinishRide from "./FinishRide";
 const CaptainRiding = () => {
   const finishRidePanelRef = useRef(null);
   const [finishRidePanel, setFinishRidePanel] = useState(false);
+  const location = useLocation();
+  const rideData = location.state?.ride;
 
   useGSAP(
     function () {
@@ -54,7 +57,7 @@ const CaptainRiding = () => {
       >
         <h5
           onClick={() => {
-            props.setRidePopUpPanel(false);
+            //props.setRidePopUpPanel(false);
           }}
           className="p-1 text-center absolute top-1 w-[93%]"
         >
@@ -69,7 +72,9 @@ const CaptainRiding = () => {
         ref={finishRidePanelRef}
         className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12"
       >
-        <FinishRide setFinishRidePanel={setFinishRidePanel} />
+        <FinishRide 
+        ride={rideData} 
+        setFinishRidePanel={setFinishRidePanel} />
       </div>
     </div>
   );

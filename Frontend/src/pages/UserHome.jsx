@@ -13,6 +13,7 @@ import axios from "axios";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import { useEffect } from "react";
+import { useNavigate }  from 'react-router-dom';
 
 const UserHome = () => {
   const [pickup, setPickup] = useState("");
@@ -32,13 +33,28 @@ const UserHome = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [fare, setFare] = useState({});
   const [vehicleType, setVehicleType] = useState(null);
+  const [ ride, setRide ] = useState(null);
 
   const { socket } = useContext(SocketContext);
   const { user } = useContext(UserDataContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    socket.emit('join', {userType : 'user', userId : user._id});
-  }, [user])
+    socket.emit("join", { userType: "user", userId: user._id });
+  }, [user]);
+  
+  socket.on("ride-confirmed", (ride) => {
+    setVehicleFound(false)
+    setWaitingForDriver(true);
+    setRide(ride);
+  });
+
+  socket.on('ride-started', ride => {
+    setWaitingForDriver(false);
+    navigate('/user/riding', { state : { ride }});
+    
+  })
 
   const fetchSuggestions = async (query) => {
     try {
@@ -146,8 +162,8 @@ const UserHome = () => {
   useGSAP(
     function () {
       // console.log("inside gsap ")
-      if (vehicleFound) {
-        // console.log(vehicleFound);
+      if (waitingForDriver) {
+        // console.log(waitingForDriver);
         gsap.to(WaitingForDriverRef.current, {
           y: "0%",
         });
@@ -157,7 +173,7 @@ const UserHome = () => {
         });
       }
     },
-    [WaitingForDriver]
+    [waitingForDriver]
   );
 
   async function findTrip() {
@@ -366,6 +382,7 @@ const UserHome = () => {
         className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
       >
         <WaitingForDriver
+        ride={ride}
           setVehicleFound={setVehicleFound}
           setWaitingForDriver={setWaitingForDriver}
         />
