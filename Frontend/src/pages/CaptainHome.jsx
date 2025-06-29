@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import carImage from "../assets/car.webp";
 import bikeImage from "../assets/moto.webp";
 import autoImage from "../assets/auto.webp";
@@ -10,12 +10,54 @@ import RidePopUp from "../components/RidePopUp";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
+import { SocketContext } from "../context/SocketContext";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainHome = () => {
   const RidePopUpPanelRef = useRef(null);
   const ConfirmRidePopUpPanelRef = useRef(null);
   const [RidePopUpPanel, setRidePopUpPanel] = useState(true);
   const [ConfirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false);
+
+  const { socket } = useContext(SocketContext);
+  const { captain } = useContext(CaptainDataContext);
+
+  useEffect(() => {
+    socket.emit("join", {
+      userId: captain._id,
+      userType: "captain",
+    });
+
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+
+          console.log( {
+            userId: captain._id,
+            location: {
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            },
+          })
+          console.log("update location for captain called ")
+          socket.emit("update-location-captain", {
+            userId: captain._id,
+            location: {
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+
+    const locationInterval = setInterval(updateLocation, 10000);
+    updateLocation();
+    
+      socket.on('new-ride', (data) => {
+        console.log(data);
+      })
+  });
 
   useGSAP(
     function () {

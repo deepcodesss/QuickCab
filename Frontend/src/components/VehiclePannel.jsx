@@ -18,10 +18,11 @@ const VehiclePannel = (props) => {
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
-          props.setVehiclePanel(false);
+          // props.setVehiclePanel(false);
+          props.selectVehicle('car');
         }}
         className="flex w-full border-2 border-gray-300 active:border-black px-3 py-1 rounded-xl items-center justify-between mb-3"
-      >
+        >
         <img src={carImage} alt="car" className="h-15" />
         <div className="ml-2 w-1/2">
           <h4 className="font-bold text-lg">
@@ -35,16 +36,17 @@ const VehiclePannel = (props) => {
             Affordable, Compact rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹193.20</h2>
+        <h2 className="text-lg font-semibold">₹{props.fare.car}</h2>
       </div>
 
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
-          props.setVehiclePanel(false);
+          // props.setVehiclePanel(false);
+          props.selectVehicle('moto');
         }}
         className="flex w-full border-2 border-gray-300 active:border-black px-3 py-1 rounded-xl items-center justify-between mb-3"
-      >
+        >
         <img src={bikeImage} alt="car" className="h-15" />
         <div className="ml-2 w-1/2">
           <h4 className="font-bold text-lg">
@@ -58,13 +60,14 @@ const VehiclePannel = (props) => {
             Affordable, Motorcycle rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹123.43</h2>
+        <h2 className="text-lg font-semibold">₹{props.fare.moto}</h2>
       </div>
 
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
-          props.setVehiclePanel(false);
+          // props.setVehiclePanel(false);
+          props.selectVehicle('auto');
         }}
         className="flex w-full border-2 border-gray-300 active:border-black px-3 py-1 rounded-xl items-center justify-between mb-3"
       >
@@ -81,7 +84,7 @@ const VehiclePannel = (props) => {
             Affordable, Auto rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹89.65</h2>
+        <h2 className="text-lg font-semibold">₹{props.fare.auto}</h2>
       </div>
     </div>
   );

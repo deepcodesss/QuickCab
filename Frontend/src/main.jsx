@@ -6,6 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import UserContext from "./context/UserContext.jsx";
 import CaptainContext from "./context/CaptainContext.jsx";
 import UIProvider from "./context/UIContext.jsx";
+import SocketProvider from "./context/SocketContext.jsx";
+
+
 // import { UIContext } from "./context/UIContext.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -13,9 +16,11 @@ createRoot(document.getElementById("root")).render(
     <UIProvider>
       <CaptainContext>
         <UserContext>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <SocketProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SocketProvider>
         </UserContext>
       </CaptainContext>
     </UIProvider>
