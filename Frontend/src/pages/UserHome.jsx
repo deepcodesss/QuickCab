@@ -12,7 +12,7 @@ import axios from "axios";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import { useEffect } from "react";
-import { useNavigate }  from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const UserHome = () => {
   const [pickup, setPickup] = useState("");
@@ -32,7 +32,7 @@ const UserHome = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [fare, setFare] = useState({});
   const [vehicleType, setVehicleType] = useState(null);
-  const [ ride, setRide ] = useState(null);
+  const [ride, setRide] = useState(null);
 
   const { socket } = useContext(SocketContext);
   const { user } = useContext(UserDataContext);
@@ -42,41 +42,43 @@ const UserHome = () => {
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id });
   }, [user]);
-  
+
   socket.on("ride-confirmed", (ride) => {
-    setVehicleFound(false)
+    setVehicleFound(false);
     setWaitingForDriver(true);
     setRide(ride);
   });
 
-  socket.on('ride-cancelled', (ride) => {
+  socket.on("ride-cancelled", (ride) => {
     setWaitingForDriver(false);
-    navigate('/user/home');
-  })
+    navigate("/user/home");
+  });
 
-  socket.on('ride-started', ride => {
+  socket.on("ride-started", (ride) => {
     setWaitingForDriver(false);
-    navigate('/user/riding', { state : { ride }});
-    
-  })
+    navigate("/user/riding", { state: { ride } });
+  });
 
   const fetchSuggestions = async (query) => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/map/get-suggestions?query=${query}`,
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/map/get-suggestions`,
         {
+          params: { query },
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const data = await res.json();
-      if (data.status === "OK") {
-        setSuggestions(data.predictions);
-      } else {
-        setSuggestions([]);
-      }
+
+      const data = response.data;
+      setSuggestions(data.status === "OK" ? data.predictions : []);
     } catch (err) {
       console.error("Error fetching suggestions:", err);
       setSuggestions([]);
@@ -92,7 +94,8 @@ const UserHome = () => {
       if (panelOpen) {
         gsap.to(panelRef.current, {
           height: "60%",
-          padding: 30,
+          paddingLeft: 25,
+          paddingRight: 25,
         });
 
         gsap.to(panelCloseRef.current, {
@@ -101,7 +104,8 @@ const UserHome = () => {
       } else {
         gsap.to(panelRef.current, {
           height: "0%",
-          padding: 0,
+          paddingLeft: 0,
+          paddingRight: 0,
         });
 
         gsap.to(panelCloseRef.current, {
@@ -257,7 +261,7 @@ const UserHome = () => {
       </div>
 
       <div className="flex flex-col justify-end absolute h-screen top-0 w-full">
-        <div className="h-[25%] p-8 bg-white relative rounded-tr-2xl rounded-tl-2xl lg:w-[60%] lg:left-[20%]">
+        <div className="h-fit p-6 bg-white relative rounded-tr-2xl rounded-tl-2xl lg:w-[60%] lg:left-[20%]">
           <h5
             ref={panelCloseRef}
             onClick={() => {
@@ -269,64 +273,58 @@ const UserHome = () => {
           </h5>
           <h4 className="text-2xl font-semibold">Find Your Trip</h4>
 
-          <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
-          >
-            {/* <div className="line absolute h-10 w-1 top-[52%] left-12 bg-gray-800 rounded-full"></div> */}
-            <div className="absolute top-[42%] left-12 flex flex-col items-center text-[10px] text-black z-10">
-              <i className="ri-circle-line font-extrabold"></i>
-              <div className="h-10 w-1 bg-gray-800 rounded-full"></div>
-              <i className="ri-square-line font-extrabold"></i>
+          <form onSubmit={(e) => submitHandler(e)}>
+            <div className="relative mt-5">
+              {/* vertical line + icons */}
+              <div className="absolute left-0 top-3 flex flex-col items-center text-[10px] text-black z-10 pl-3">
+                <i className="ri-circle-line font-extrabold"></i>
+                <div className="h-10 w-1 bg-gray-800 rounded-full"></div>
+                <i className="ri-square-line font-extrabold"></i>
+              </div>
+
+              {/* pickup input */}
+              <input
+                onClick={() => setPanelOpen(true)}
+                type="text"
+                value={pickup}
+                onChange={(e) => {
+                  setPickup(e.target.value);
+                  setActiveField("pickup");
+                  fetchSuggestions(e.target.value);
+                }}
+                placeholder="Add a pick-up location"
+                className="bg-gray-200 px-12 py-2 text-base rounded-lg w-full focus:outline-gray-600"
+              />
+
+              {/* destination input */}
+              <input
+                onClick={() => {
+                  setPanelOpen(true);
+                  setActiveField("destination");
+                }}
+                type="text"
+                value={destination}
+                onChange={(e) => {
+                  setActiveField("destination");
+                  fetchSuggestions(e.target.value);
+                  setDestination(e.target.value);
+                }}
+                placeholder="Enter your destination"
+                className="bg-gray-200 px-12 py-2 text-base rounded-lg mt-3 w-full focus:outline-gray-600"
+              />
+
+              {/* Find Trip button */}
+              <button
+                onClick={findTrip}
+                className="bg-black text-xl text-white p-3 flex rounded-xl justify-center items-center w-full gap-3 mt-5"
+              >
+                Find Trip
+              </button>
             </div>
-
-            <input
-              onClick={() => {
-                setPanelOpen(true);
-              }}
-              type="text"
-              value={pickup}
-              onChange={(e) => {
-                setPickup(e.target.value);
-                setActiveField("pickup");
-                fetchSuggestions(e.target.value);
-              }}
-              name=""
-              id=""
-              placeholder="Add a pick-up location"
-              className="bg-gray-200 px-15 py-2 text-base rounded-lg w-full mt-5 focus:outline-gray-700"
-            />
-
-            <input
-              onClick={() => {
-                setPanelOpen(true);
-                setActiveField("destination");
-              }}
-              type="text"
-              value={destination}
-              onChange={(e) => {
-                setActiveField("destination");
-                fetchSuggestions(e.target.value);
-                setDestination(e.target.value);
-              }}
-              name=""
-              id=""
-              placeholder="Enter your destination"
-              className="bg-gray-200 px-15 py-2 text-base rounded-lg mt-3 w-full focus:outline-gray-700"
-            />
           </form>
-          <button
-            onClick={() => {
-              findTrip();
-            }}
-            className=" bg-black text-xl text-white p-3 flex rounded-xl justify-center items-center w-full gap-3 mt-5"
-          >
-            Find Trip
-          </button>
         </div>
 
-        <div ref={panelRef} className="bg-white h-0">
+        <div ref={panelRef} className="h-0 bg-white relative lg:w-[60%] lg:left-[20%] lg:max-h-[45%]">
           <LocationSearchPannel
             suggestions={suggestions}
             setSuggestions={setSuggestions}
@@ -386,7 +384,7 @@ const UserHome = () => {
         className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
       >
         <WaitingForDriver
-        ride={ride}
+          ride={ride}
           setVehicleFound={setVehicleFound}
           setWaitingForDriver={setWaitingForDriver}
         />
