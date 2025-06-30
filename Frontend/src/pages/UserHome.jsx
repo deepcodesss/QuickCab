@@ -339,7 +339,7 @@ const UserHome = () => {
 
       <div
         ref={vehiclePanelRef}
-        className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
+        className="fixed rounded-tr-2xl rounded-tl-2xl w-full z-10 bottom-0 bg-white px-5 lg:px-8 translate-y-full py-5 lg:w-[60%] lg:left-[20%] lg:max-h-[60%]"
       >
         <VehiclePannel
           selectVehicle={setVehicleType}
