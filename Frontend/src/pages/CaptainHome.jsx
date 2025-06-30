@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import carImage from "../assets/car.webp";
 import bikeImage from "../assets/moto.webp";
 import autoImage from "../assets/auto.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import quickCabLogo from "../assets/quickcab.svg";
 // import quickCabLogo from '../assets/quickcab_black.svg'
 import CaptainDetails from "../components/CaptainDetails";
@@ -20,6 +20,7 @@ const CaptainHome = () => {
   const [RidePopUpPanel, setRidePopUpPanel] = useState(false);
   const [ConfirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false);
   const [ride, setRide] = useState(null);
+  const navigate = useNavigate();
 
   const { socket } = useContext(SocketContext);
   const { captain } = useContext(CaptainDataContext);
@@ -80,6 +81,27 @@ const CaptainHome = () => {
     setRidePopUpPanel(false);
     setConfirmRidePopUpPanel(true);
   }
+
+
+    async function cancelRide() {
+      const response = axios.post(
+        `${import.meta.env.VITE_BASE_URL}/rides/cancel`,
+        {
+          rideId: ride._id,
+          captain: captain,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data, captain);
+    setRidePopUpPanel(false);
+    setConfirmRidePopUpPanel(false);
+    navigate('/captain/home');
+  }
+
 
   useGSAP(
     function () {
@@ -153,6 +175,7 @@ const CaptainHome = () => {
         className="fixed h-screen w-full z-10 bottom-0 p-3 bg-white px-3 py-6 pt-12"
       >
         <ConfirmRidePopUp
+        cancelRide={cancelRide}
         ride={ride}
           setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
           setRidePopUpPanel={setRidePopUpPanel}

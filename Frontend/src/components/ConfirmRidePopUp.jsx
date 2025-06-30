@@ -104,16 +104,17 @@ const ConfirmRidePopUp = (props) => {
           <button className="w-full flex justify-center items-center bg-green-600 text-white font-semibold text-xl rounded-lg p-4">
             Confirm
           </button>
+        </form>
           <button
             onClick={() => {
+              props.cancelRide()
               props.setRidePopUpPanel(false);
               props.setConfirmRidePopUpPanel(false);
             }}
-            className="w-full bg-red-600 text-white font-semibold text-xl p-4 rounded-lg"
+            className="w-full bg-red-600 text-white font-semibold text-xl p-4 rounded-lg mt-5"
           >
             Cancel
           </button>
-        </form>
       </div>
     </div>
   );

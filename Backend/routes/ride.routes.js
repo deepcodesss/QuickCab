@@ -57,4 +57,11 @@ router.post('/end-ride',
   rideController.endRide
 )
 
+
+router.post('/cancel',
+  authMiddleware.authCaptain,
+  body("rideId").isMongoId().withMessage("Inavlid ride id"),
+  rideController.cancelRide
+)
+
 module.exports = router;

@@ -50,6 +50,11 @@ const UserHome = () => {
     setRide(ride);
   });
 
+  socket.on('ride-cancelled', (ride) => {
+    setWaitingForDriver(false);
+    navigate('/user/home');
+  })
+
   socket.on('ride-started', ride => {
     setWaitingForDriver(false);
     navigate('/user/riding', { state : { ride }});

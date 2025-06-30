@@ -152,3 +152,29 @@ module.exports.endRide = async (req, res) => {
   }
 
 }
+
+
+module.exports.cancelRide = async (req, res) => {
+
+  const errors = validationResult(req);
+   if(!errors.isEmpty()){
+    
+    return res.status(400).json({message : "validation error in rideId", errors : errors.array()});
+  }
+
+  const { rideId } = req.body;
+     try{
+
+    const ride = await rideService.cancelRide({ rideId, captain : req.captain});
+    
+    sendMessageToSocketId(ride.user.socketId, {
+      event : 'ride-cancelled',
+      data: ride
+    })
+
+    return res.status(200).json(ride);
+  } catch(err){
+    return res.status(500).json({message : err.message});
+  }
+  
+}

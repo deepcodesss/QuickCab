@@ -174,11 +174,34 @@ module.exports.endRide = async ({rideId, captain}) => {
         status : 'completed'
     })
     
-    // sendMessageToSocketId(ride.user.socketId, {
-    //     event: 'ride-ended',
-    //     data: ride
-    // })
-    
     return ride;
     
+}
+
+
+
+module.exports.cancelRide = async ({ rideId, captain }) => {
+
+    console.log(rideId, captain._id);
+
+    if(!rideId){
+        throw new error("rideId is required");
+    }
+
+    await rideModel.findOneAndUpdate({
+        _id: rideId
+    }, {
+        status : 'cancelled',
+        captain: captain._id
+    })
+
+    const ride = await rideModel.findOne({
+        _id : rideId
+    }).populate('user').populate('captain');
+
+    if(!ride){
+        throw new Error("Ride not found");
+    }
+
+    return ride;
 }
