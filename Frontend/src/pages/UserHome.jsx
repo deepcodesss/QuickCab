@@ -13,6 +13,7 @@ import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast'
 
 const UserHome = () => {
   const [pickup, setPickup] = useState("");
@@ -118,9 +119,7 @@ const UserHome = () => {
 
   useGSAP(
     function () {
-      // console.log("inside gsap ")
       if (vehiclePanel) {
-        console.log(vehiclePanel);
         gsap.to(vehiclePanelRef.current, {
           y: "0%",
         });
@@ -135,9 +134,7 @@ const UserHome = () => {
 
   useGSAP(
     function () {
-      // console.log("inside gsap ")
       if (confirmRidePanel) {
-        // console.log(confirmRidePanel);
         gsap.to(confirmRidePanelRef.current, {
           y: "0%",
         });
@@ -152,9 +149,7 @@ const UserHome = () => {
 
   useGSAP(
     function () {
-      // console.log("inside gsap ")
       if (vehicleFound) {
-        // console.log(vehicleFound);
         gsap.to(vehicleFoundRef.current, {
           y: "0%",
         });
@@ -169,9 +164,7 @@ const UserHome = () => {
 
   useGSAP(
     function () {
-      // console.log("inside gsap ")
       if (waitingForDriver) {
-        // console.log(waitingForDriver);
         gsap.to(WaitingForDriverRef.current, {
           y: "0%",
         });
@@ -184,35 +177,69 @@ const UserHome = () => {
     [waitingForDriver]
   );
 
-  async function findTrip() {
-    setPanelOpen(false);
-    console.log(pickup);
-    console.log(destination);
+async function findTrip() {
+  setPanelOpen(false);
+
+  const loadingToast = toast.loading("Finding your trip...", {
+    style: {
+      background: "#1f1f1f",
+      color: "#fff",
+      border: "1px solid #444",
+    },
+  });
+
+  try {
     const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/rides/get-fare`,
       {
         params: { pickup, destination },
-
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
+
     setFare(response.data);
     setVehiclePanel(true);
-    // console.log(response.data);
-  }
 
-  async function createRide() {
-    // console.log(pickup);
-    // console.log(destination);
-    // console.log(vehicleType);
+    toast.success("Trips found!", {
+      id: loadingToast,
+      style: {
+        background: "#1f1f1f",
+        color: "#fff",
+        border: "1px solid #444",
+      },
+    });
+  } catch (err) {
+    toast.error("Error finding trip", {
+      id: loadingToast,
+      style: {
+        background: "#1f1f1f",
+        color: "#fff",
+        border: "1px solid #444",
+      },
+    });
+    console.error("Failed to fetch fare:", err);
+  }
+}
+
+
+async function createRide() {
+  const loadingToast = toast.loading("Confirming your ride...", {
+    style: {
+      background: "#1f1f1f",
+      color: "#fff",
+      border: "1px solid #444",
+    },
+  });
+
+  try {
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/rides/create`,
       {
-        pickup: pickup,
-        destination: destination,
-        vehicleType: vehicleType,
+        pickup,
+        destination,
+        vehicleType,
       },
       {
         headers: {
@@ -220,26 +247,35 @@ const UserHome = () => {
         },
       }
     );
+
     console.log(response.data);
+     setVehicleFound(true);
+          setConfirmRidePanel(false);
+
+    toast.success("Ride confirmed!", {
+      id: loadingToast,
+      style: {
+        background: "#1f1f1f",
+        color: "#fff",
+        border: "1px solid #444",
+      },
+    });
+
+
+  } catch (err) {
+    console.error("Error creating ride:", err);
+
+    toast.error("Error confirming ride", {
+      id: loadingToast,
+      style: {
+        background: "#1f1f1f",
+        color: "#fff",
+        border: "none",
+      },
+    });
   }
+}
 
-  // async function createRide() {
-  //   const response = await axios.post(
-  //     `${import.meta.env.VITE_BASE_URL}/rides/create`,
-  //     {
-  //       pickup,
-  //       destination,
-  //       vehicleType,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //       },
-  //     }
-  //   );
-
-  //   console.log(response.data);
-  // }
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -293,7 +329,7 @@ const UserHome = () => {
                   fetchSuggestions(e.target.value);
                 }}
                 placeholder="Add a pick-up location"
-                className="bg-gray-200 px-12 py-2 text-base rounded-lg w-full focus:outline-gray-600"
+                className="bg-gray-200 px-12 py-2 text-base rounded-lg w-full border-2 border-gray-400 focus:outline-gray-600"
               />
 
               {/* destination input */}
@@ -310,7 +346,7 @@ const UserHome = () => {
                   setDestination(e.target.value);
                 }}
                 placeholder="Enter your destination"
-                className="bg-gray-200 px-12 py-2 text-base rounded-lg mt-3 w-full focus:outline-gray-600"
+                className="bg-gray-200 px-12 py-2 text-base rounded-lg mt-3 w-full border-2 border-gray-400 focus:outline-gray-600"
               />
 
               {/* Find Trip button */}
@@ -351,7 +387,7 @@ const UserHome = () => {
 
       <div
         ref={confirmRidePanelRef}
-        className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
+        className="fixed rounded-tr-2xl rounded-tl-2xl w-full z-10 bottom-0 bg-white px-5 lg:px-8 translate-y-full py-5 lg:w-[60%] lg:left-[20%] lg:max-h-[60%]"
       >
         <ConfirmedRide
           createRide={createRide}
@@ -367,7 +403,7 @@ const UserHome = () => {
 
       <div
         ref={vehicleFoundRef}
-        className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
+        className="fixed rounded-tr-2xl rounded-tl-2xl w-full z-10 bottom-0 bg-white px-5 lg:px-8 translate-y-full py-5 lg:w-[60%] lg:left-[20%] lg:max-h-[60%]"
       >
         <LookingForDriver
           pickup={pickup}
@@ -381,7 +417,7 @@ const UserHome = () => {
 
       <div
         ref={WaitingForDriverRef}
-        className="fixed w-full z-10 bottom-0 p-3 bg-white px-3 py-6 translate-y-full pt-12"
+        className="fixed rounded-tr-2xl rounded-tl-2xl w-full z-10 bottom-0 bg-white px-5 lg:px-8 translate-y-full py-5 lg:w-[60%] lg:left-[20%] lg:max-h-[60%]"
       >
         <WaitingForDriver
           ride={ride}

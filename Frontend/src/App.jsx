@@ -17,11 +17,14 @@ import CaptainKyc from "./pages/CaptainKyc";
 import NotFound from "./pages/NotFound";
 import Riding from "./pages/Riding";
 import CaptainRiding from "./components/CaptainRiding";
+import { Toaster } from "react-hot-toast";
+
 
 const App = () => {
   return (
     <div>
       {/* <Navbar /> */}
+      <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/user/login" element={<UserLogin />} />
