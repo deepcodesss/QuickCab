@@ -1,75 +1,96 @@
+
 import React from "react";
+import toast from "react-hot-toast";
 
 const RidePopUp = (props) => {
   return (
-    <div>
-      <h5
-        onClick={() => {
-          props.setRidePopUpPanel(false);
-        }}
-        className="p-1 text-center absolute top-0 w-[93%]"
-      >
-        <i className="ri-arrow-down-wide-line text-3xl text-gray-300"></i>
-      </h5>
-      <h3 className="font-semibold text-2xl mb-6">New Ride Available!</h3>
-      <div className="flex justify-between items-center bg-yellow-400 p-3 rounded-lg mt-3">
+    <div className="w-full">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-semibold text-xl text-black">New Ride Available</h3>
+        <i
+          onClick={() => props.setRidePopUpPanel(false)}
+          className="ri-arrow-down-wide-line text-2xl text-gray-400 cursor-pointer hover:text-black transition"
+        ></i>
+      </div>
+
+      {/* User Info */}
+      <div className="flex justify-between items-center bg-yellow-400 p-3 rounded-xl mb-4 shadow-sm">
         <div className="flex items-center gap-3">
           <img
             className="h-12 w-12 rounded-full object-cover"
             src="https://i.pinimg.com/736x/cb/33/d8/cb33d80fe655e221ae05f41c8edd0cdb.jpg"
             alt="user"
           />
-          <h2 className="text-xl font-medium">{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname}</h2>
+          <h4 className="text-base font-semibold capitalize">
+            {props.ride?.user.fullname.firstname +
+              " " +
+              props.ride?.user.fullname.lastname}
+          </h4>
         </div>
-        <h5 className="text-lg font-semibold">2.2 KM</h5>
+        <span className="text-sm font-medium text-gray-700">2.2 km</span>
       </div>
-      <div className="flex flex-col gap-5 w-full items-center mt-3">
-        <div className="flex flex-col gap-1 w-full px-3">
-          <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
-            <i className="ri-map-pin-4-line text-lg"></i>
-            <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                {props.ride?.pickup}
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-start gap-3 border-gray-300 border-b-2 p-3">
-            <i className="ri-map-pin-range-line text-lg"></i>
-            <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                {props.ride?.destination}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 border-gray-300 p-3">
-            <i className="ri-money-rupee-circle-line text-lg"></i>
-            <div>
-              <h3 className="text-lg font-medium">₹{props.ride?.fare}</h3>
-              <p className="text-sm -mt-1 text-gray-600">Cash cash</p>
-            </div>
+      {/* Ride Info */}
+      <div className="flex flex-col gap-3 text-sm text-gray-800 mb-5">
+        {/* Pickup */}
+        <div className="flex items-start gap-2 border-b border-gray-300 pb-2">
+          <i className="ri-map-pin-4-line text-xl text-black pt-1"></i>
+          <div>
+            <p className="text-base font-medium text-gray-900">
+              {props.ride?.pickup}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">Pickup</p>
           </div>
         </div>
+
+        {/* Destination */}
+        <div className="flex items-start gap-2 border-b border-gray-300 pb-2">
+          <i className="ri-map-pin-range-line text-xl text-black pt-1"></i>
+          <div>
+            <p className="text-base font-medium text-gray-900">
+              {props.ride?.destination}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">Destination</p>
+          </div>
+        </div>
+
+        {/* Fare */}
+        <div className="flex items-start gap-2">
+          <i className="ri-money-rupee-circle-line text-xl text-black pt-1"></i>
+          <div>
+            <p className="text-base font-medium text-gray-900">
+              ₹{props.ride?.fare}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">Payment: Cash</p>
+          </div>
+        </div>
       </div>
-      <div className=" w-full flex flex-row items-center gap-5">
+
+      {/* Buttons */}
+      <div className="flex gap-4">
         <button
           onClick={() => {
+            toast("Ride ignored", {
+              icon: "🚫",
+              style: {
+                borderRadius: "10px",
+                background: "#f9fafb",
+                color: "#333",
+              },
+            });
             props.setRidePopUpPanel(false);
           }}
-          className="w-1/2 bg-gray-300 text-gray-500 font-bold rounded-lg p-3"
+          className="w-1/2 bg-gray-200 text-gray-600 font-semibold rounded-lg py-3 hover:bg-gray-300 transition"
         >
           Ignore
         </button>
         <button
           onClick={() => {
             props.setConfirmRidePopUpPanel(true);
-            // props.setRidePopUpPanel(false);
-            props.confirmRide()
+            props.confirmRide();
           }}
-          className="w-1/2 bg-green-500 text-white font-bold rounded-lg p-3"
+          className="w-1/2 bg-green-700 text-white font-semibold rounded-lg py-3 hover:bg-green-800 transition"
         >
           Accept Ride
         </button>

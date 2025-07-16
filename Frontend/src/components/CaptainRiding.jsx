@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import FinishRide from "./FinishRide";
+import CaptainMapView from "./CaptainMapView";
 
 const CaptainRiding = () => {
   const finishRidePanelRef = useRef(null);
@@ -43,11 +44,7 @@ const CaptainRiding = () => {
         </Link>
       </div>
       <div className="h-[80%]">
-        <img
-          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
-          alt=""
-          className="h-full w-full object-cover "
-        />
+        <CaptainMapView />
       </div>
       <div
         onClick={() => {

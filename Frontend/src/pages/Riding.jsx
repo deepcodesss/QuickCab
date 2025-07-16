@@ -4,6 +4,7 @@ import bikeImage from "../assets/moto.webp";
 import autoImage from "../assets/auto.webp";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useContext } from "react";
+import MapView from "../components/MapView";
 import {SocketContext} from "../context/SocketContext";
 
 
@@ -27,7 +28,7 @@ const Riding = () => {
     <div className="h-screen">
         <Link to='/user/home' className="fixed h-10 w-10 bg-white rounded-2xl flex items-center justify-center"><i className="ri-home-5-line text-2xl font-extrabold right-2 top-2 block"></i></Link>
       <div className="h-1/2">
-        <img src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" className="h-full w-full object-cover " />
+      <MapView />
       </div>
       <div className="h-1/2 p-5">
         <div className="flex items-center justify-between">
@@ -63,7 +64,11 @@ const Riding = () => {
           </div>
         </div>
         <div className="p-2">
-        <button className="w-full bg-green-500 text-white font-bold rounded-lg p-2"> Proceed To Pay</button>
+        <button onClick={() =>{
+
+          // temp handled
+          navigate('/user/home');
+        }} className="w-full bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg p-2"> Proceed To Pay</button>
         </div>
       </div>
     </div>

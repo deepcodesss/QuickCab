@@ -113,6 +113,8 @@ module.exports.confirmRide = async ({ rideId, captain }) => {
 
 module.exports.startRide = async({rideId, otp, captain}) => {
 
+    console.log("printing the otp verification thing :: ", rideId, otp, captain);
+
     if(!rideId || !otp){
         throw new Error("rideId and otp are required");
     }
@@ -120,6 +122,8 @@ module.exports.startRide = async({rideId, otp, captain}) => {
     const ride = await rideModel.findOne({
         _id: rideId
     }).populate('user').populate('captain').select('+otp')
+
+    console.log("actual otp and entered otp :: ", ride.otp, otp);
     
     if(!ride){
         throw new Error("ride not found");
