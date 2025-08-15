@@ -61,7 +61,7 @@ const Navbar = () => {
 
           {/* Right Navigation */}
           <div className="hidden sm:flex gap-6 items-center">
-            <a href="#help" className="text-neutral-400 hover:text-white">Help</a>
+            <Link to="/help" className="text-neutral-400 hover:text-white">Help</Link>
 
             <div className="relative" ref={loginRef}>
               <button

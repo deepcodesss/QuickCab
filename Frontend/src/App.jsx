@@ -13,11 +13,13 @@ import CaptainHome from "./pages/CaptainHome";
 import CaptainProtectWrapper from "./pages/CaptainProtectWrapper";
 import CaptainLogout from "./pages/CaptainLogout";
 import About from "./pages/About";
+
 import CaptainKyc from "./pages/CaptainKyc";
 import NotFound from "./pages/NotFound";
 import Riding from "./pages/Riding";
 import CaptainRiding from "./components/CaptainRiding";
 import { Toaster } from "react-hot-toast";
+import HelpPage from "./pages/Help";
 
 
 const App = () => {
@@ -42,6 +44,7 @@ const App = () => {
         <Route path="/captain/login" element={<CaptainLogin />} />
         <Route path="/captain/signup" element={<CaptainSignup />} />
         <Route path="/about" element={<About />} />
+        <Route path="/help" element={<HelpPage/>} />
         <Route path="captain/kyc" element={<CaptainKyc />} />
 
         <Route path="*" element={<NotFound />} />

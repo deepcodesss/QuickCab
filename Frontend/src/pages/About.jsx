@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import aboutImg from "../assets/about.png";
 import about1 from "../assets/about1.jpg";
 import rajdeep from "../assets/rajdeep.jpg";
+import rajeev from "../assets/rajeev.jpeg";
 import { Github, Linkedin, Twitter,Instagram, Globe } from 'lucide-react';
 
 const About = () => {
@@ -134,7 +135,7 @@ const About = () => {
                   > <Linkedin className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/rajeev"
+                    href="https://www.instagram.com/m.rajdeep__/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-black"
@@ -147,7 +148,7 @@ const About = () => {
               {/* Developer 2 */}
               <div className="bg-white shadow-md rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
                 <img
-                  src="https://avatars.githubusercontent.com/u/00000002?v=4" // Replace with real avatar
+                  src={rajeev} // Replace with real avatar
                   alt="Rajeev Singh"
                   className="w-24 h-24 rounded-full mb-4 object-cover"
                 />
@@ -173,7 +174,7 @@ const About = () => {
                     <Linkedin className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/rajeev"
+                    href="https://www.instagram.com/_r_aj_e_e_v_/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-black"
